@@ -103,8 +103,8 @@ function print_warn {
 function update_upgrade {
     # Run through the apt-get update/upgrade first. This should be done before
     # we try to install any package
-    apt-get -q -y update
-    apt-get -q -y upgrade
+    apt-get -qq -y update
+    apt-get -qq -y upgrade
 }
 
 function remove_unneeded {
@@ -179,7 +179,7 @@ END
 }
 
 function install_php {
-    sudo apt-get -y -q install php5 php5-fpm php-pear php5-mysql
+    sudo apt-get -y -qq install php5 php5-fpm php-pear php5-mysql
 }
 
 function install_syslogd {
@@ -226,11 +226,11 @@ END
 
 function install_redis {
     #redis is used to cache Wordpress pages to speed up response time
-    sudo apt-get -q -y install redis-server
+    sudo apt-get -qq -y install redis-server
 }
 
 function install_fonts {
-    sudo apt-get -q -y install fonts-lao
+    sudo apt-get -qq -y install fonts-lao
 }
 
 function install_wordpress {
@@ -306,7 +306,7 @@ END
 
 function config_network {
     print_info "Installing network packages"
-    sudo apt-get -q -y install bridge-utils hostapd avahi-daemon udhcpd
+    sudo apt-get -qq -y install bridge-utils hostapd avahi-daemon udhcpd dnsmasq
 
     print_info "Configuring network setup"
     wget http://www.daveconroy.com/wp3/wp-content/uploads/2013/07/hostapd.zip
@@ -379,6 +379,28 @@ COMMIT
 -A POSTROUTING -o eth0 -j MASQUERADE
 COMMIT
 END
+    sudo rm /etc/dnsmasq.conf
+    cat > "/etc/dnsmasq.conf" <<END
+interface=wlan0
+dhcp-range=10.0.10.10,10.0.10.200,12h
+END
+
+*filter
+:INPUT ACCEPT [149:13529]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [22:2208]
+-A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i wlan0 -o eth0 -j ACCEPT
+COMMIT
+*nat
+:PREROUTING ACCEPT [75:5274]
+:INPUT ACCEPT [75:5274]
+:OUTPUT ACCEPT [3:268]
+:POSTROUTING ACCEPT [0:0]
+-A POSTROUTING -o eth0 -j MASQUERADE
+COMMIT
+END
+
   sudo rm /etc/default/udhcpd
   echo -e "DHCPD_OPTS='-S'" > /etc/default/udhcpd
   sudo update-rc.d udhcpd enable
