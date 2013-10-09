@@ -6,7 +6,7 @@ Once Raspbian is installed, your Pi will reboot and then go in to a blue and red
 
 Run this command to install and configure VS-Pi:
 
-    git clone https://github.com/villagescience/vspi.git && bash ./vspi/setup.sh
+    git clone https://github.com/villagescience/vspi.git && sudo bash ./vspi/setup.sh
 
 The setup script will now run and might take over 10 minutes depending on your connection. The script sets up and configures:
 

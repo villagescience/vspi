@@ -364,7 +364,6 @@ option	lease	864000
 END
 
     cat > "/etc/iptables.ipv4.nat" <<END
-
 *filter
 :INPUT ACCEPT [149:13529]
 :FORWARD ACCEPT [0:0]
