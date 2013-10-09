@@ -236,7 +236,7 @@ function install_fonts {
 function install_wordpress {
     check_install wget wget
 
-#     sudo git clone "https://bitbucket.org/villagescience/wordpress.git /var/www/$1"
+    sudo git clone https://github.com/villagescience/wordpress.git /var/www/$1
     sudo chown root:root -R "/var/www/$1"
     sudo chmod 777 -R "/var/www/$1/wp-content"
     sudo chmod 666 "/var/www/$1/.htaccess"
