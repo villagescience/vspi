@@ -1,0 +1,67 @@
+#!/bin/bash
+
+########################################################################
+##
+##   VS-Pi Manager
+##   ====================
+##   This shell script helps manage and update VSPi
+##   by using easy and simple commands
+##
+##   Visit http://github.com/villagescience for more information.
+##
+##   By Nick Wynja for Village Science on 2013-10-07 under GPLv3
+##
+########################################################################
+
+CURRENT_VERSION="1.0"
+INSTALLED_VERSION=$(</etc/vspi/version)
+UPDATE_PATH="/etc/vspi/updates"
+
+if [ -z "$1" ]  ## If no arguments, list usage instructions
+then
+    echo "  Usage: -v | update | help"
+    echo "  To update vspi to latest, use \`vpsi update\`"
+    echo "    or \`vspi update X.X\` to update to a specific version"
+    echo "  To update wordpress to latest, use \`vpsi update wordpress\`"
+    echo "    or \`vspi update wordpress BRANCH_NAME\` to update to a git branch"
+elif [ $1 = "-v" ] ## Echo version number
+then
+  echo "VS-Pi version $INSTALLED_VERSION installed."
+elif [ $1 = "update" ] # If first argument is "update"
+then
+  if [ -z "$2" ] # Then if the second arg is empty, pull down vspi changes
+  then
+    echo "Downloading updates . . . "
+    cd /etc/vspi
+    git pull origin
+    echo "Current version: $INSTALLED_VERSION"
+    ## Can I run all updates to current?
+  elif [ $2 = "wordpress" ] # But if second arg is wordpress, pull down wordpress changes
+  then
+    cd /var/www/vspi.local
+    if [ -z "$3" ] # But if there's no other arg, make sure you're on master and pull changes
+    then
+      sudo git checkout master
+      sudo git pull origin master
+    else # But if there is an arg, fetch updates and check out that branch
+      sudo git fetch
+      sudo git checkout $3
+    fi
+  else # But if second arg isn't facebook, run the specified version update
+    echo "Downloading updates . . . "
+    cd /etc/vspi
+    git pull origin
+    if source $UPDATE_PATH/$2.sh 2>/dev/null
+    then
+      echo "Updated to version $2"
+      echo -e $2 > /etc/vspi/version
+    else
+      echo "Error updating"
+    fi
+  fi
+elif [ $1 = "help" ] # If your argument is help, we'll send help
+then
+  echo "If you're having problems, check out the wiki"
+  echo "at github.com/villagescience/vspi/wiki or
+  echo "contact nick.wynja@villagescience.org"
+fi
