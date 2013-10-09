@@ -103,6 +103,7 @@ function print_warn {
 function update_upgrade {
     # Run through the apt-get update/upgrade first. This should be done before
     # we try to install any package
+    print_info "Updating packages"
     apt-get -qq -y update
     apt-get -qq -y upgrade
 }

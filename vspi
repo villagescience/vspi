@@ -62,6 +62,6 @@ then
 elif [ $1 = "help" ] # If your argument is help, we'll send help
 then
   echo "If you're having problems, check out the wiki"
-  echo "at github.com/villagescience/vspi/wiki or
+  echo "at github.com/villagescience/vspi/wiki or"
   echo "contact nick.wynja@villagescience.org"
 fi
