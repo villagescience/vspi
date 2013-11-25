@@ -11,7 +11,7 @@
 
 > In locations with internet access, VS-Pi does even more. It can deliver real-time data (such as weather alerts and crop prices) directly to communities. It can also allow content providers to update and refine the materials they’re providing to communities, based upon direct feedback. Users can create or improve their own materials and share it with their neighbors.
 
-## `vspi` ##
+## Installing `vspi` ##
 
 Download the latest NOOBS from [raspberrypi.org/downloads](http://www.raspberrypi.org/downloads). NOOBS Lite (network install only) will be a smaller download since it doesn't grab the OSes until you pick one at install but if you plan to reinstall Raspbian several times, it'll have to re-download the OS each time.
 
