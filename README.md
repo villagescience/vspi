@@ -29,7 +29,11 @@ The setup script will now run and might take over 10 minutes depending on your c
 * MySQL
 * nginx
 * Redis
-* Wordpress
+* WordPress
 * Various network utilities to make VSPi a wifi hotspot
 
 After the script finishes, your Pi will reboot. Once it's booted back up, you can join the wireless network it creates called "VS-Pi Connect" then navigate to http://vspi.local.
+
+### WordPress ###
+
+Also see [villagescience/wordpress](https://github.com/villagescience/wordpress) for the repo of our base WordPress install that's packaged with VSPi.
