@@ -20,7 +20,7 @@ UPDATE_PATH="/etc/vspi/updates"
 if [ -z "$1" ]  ## If no arguments, list usage instructions
 then
     echo "  Usage: -v | update | help"
-    echo "  To update vspi to latest, use \`vpsi update\`"
+    echo "  To update vspi to latest, use \`vspi update\`"
     echo "    or \`vspi update X.X\` to update to a specific version"
     echo "  To update wordpress to latest, use \`vpsi update wordpress\`"
     echo "    or \`vspi update wordpress BRANCH_NAME\` to update to a git branch"
