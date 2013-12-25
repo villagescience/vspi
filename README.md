@@ -1,15 +1,16 @@
 ## About VSPi ##
 
+VSPi is an education server targeting developing countries. The hardware is based on Raspberry Pi computers because they are inexpensive and efficient. The server software runs on nginx and runs WordPress because there is an large community of developer suuport. [Read more about VSPi on the Village Science site.](http://villagescience.org/vs-pi/) 
 
-[Read more about VSPi on the Village Science site.](http://villagescience.org/vs-pi/)
+No matter your level of experience, your contributions to the project are welcome. The steps for installing the VSPi code are listed below, give it a try and let us know what you think.
 
-> VS-Pi has been designed to address every one of these obstacles:
+## Hardware Configuration ##
+* Raspberry Pi - Model B (512 MB / Revision 2)
+* Edimax 150 Mbps Wireless 11n Nano Size USB Adapter
+* Transcend 32 GB Flash Memory Card
+* Raspberry Pi Case
+* Micro USB power plug
 
-> * It’s inexpensive. Fully assembled, we’re aiming for a cost of about US$65 per unit;
-* It’s efficient. Our device needs very little electricity to operate and can run on solar power, a battery, or even a water wheel in a stream;
-* It’s useful. VS-Pi comes “pre-loaded” with culturally-relevant, local language content from a variety of partners: educational texts, health videos, agricultural information, financial literacy training – all tailored to each community’s needs.
-
-> In locations with internet access, VS-Pi does even more. It can deliver real-time data (such as weather alerts and crop prices) directly to communities. It can also allow content providers to update and refine the materials they’re providing to communities, based upon direct feedback. Users can create or improve their own materials and share it with their neighbors.
 
 ## Installing `vspi` ##
 
@@ -33,6 +34,7 @@ The setup script will now run and might take over 10 minutes depending on your c
 * Various network utilities to make VSPi a wifi hotspot
 
 After the script finishes, your Pi will reboot. Once it's booted back up, you can join the wireless network it creates called "VS-Pi Connect" then navigate to http://vspi.local.
+
 
 ### WordPress ###
 
