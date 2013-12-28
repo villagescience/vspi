@@ -385,22 +385,6 @@ interface=wlan0
 dhcp-range=10.0.10.10,10.0.10.200,12h
 END
 
-*filter
-:INPUT ACCEPT [149:13529]
-:FORWARD ACCEPT [0:0]
-:OUTPUT ACCEPT [22:2208]
--A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
--A FORWARD -i wlan0 -o eth0 -j ACCEPT
-COMMIT
-*nat
-:PREROUTING ACCEPT [75:5274]
-:INPUT ACCEPT [75:5274]
-:OUTPUT ACCEPT [3:268]
-:POSTROUTING ACCEPT [0:0]
--A POSTROUTING -o eth0 -j MASQUERADE
-COMMIT
-END
-
   sudo rm /etc/default/udhcpd
   echo -e "DHCPD_OPTS='-S'" > /etc/default/udhcpd
   sudo update-rc.d udhcpd enable
