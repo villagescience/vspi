@@ -363,6 +363,9 @@ option	domain	local
 option	lease	864000
 END
 
+    # configure ip forwading/masquerade from wlan clients to the upstream eth0
+    # network, so the vspi serves as a wireless router, i.e. clients can
+    # connect to the outside internet as well as the vspi pages.
     cat > "/etc/iptables.ipv4.nat" <<END
 *filter
 :INPUT ACCEPT [149:13529]
@@ -379,6 +382,11 @@ COMMIT
 -A POSTROUTING -o eth0 -j MASQUERADE
 COMMIT
 END
+
+    # for the above to work, we need to enable ipv4 forwarding in the kernel
+    echo "# allow vspi to act as a router" >> /etc/sysctl.conf
+    echo "net.ipv4.ip_forward=1"           >> /etc/sysctl.conf
+
     sudo rm /etc/dnsmasq.conf
     cat > "/etc/dnsmasq.conf" <<END
 interface=wlan0
