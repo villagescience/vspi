@@ -261,7 +261,7 @@ function install_wordpress {
     cat > "/etc/nginx/sites-enabled/$1.conf" <<END
 server {
     listen       80 default_server;
-    server_name  vspi.local;
+    server_name  vspi;
     root         /var/www/$1;
 
     location /index.php {
