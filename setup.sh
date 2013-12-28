@@ -307,7 +307,7 @@ END
 
 function config_network {
     print_info "Installing network packages"
-    sudo apt-get -qq -y install bridge-utils hostapd avahi-daemon udhcpd dnsmasq
+    sudo apt-get -qq -y install bridge-utils hostapd avahi-daemon dnsmasq
 
     print_info "Configuring network setup"
     wget http://www.daveconroy.com/wp3/wp-content/uploads/2013/07/hostapd.zip
@@ -351,18 +351,6 @@ auth_algs=1
 wmm_enabled=0
 END
 
-    cat > "/etc/udhcpd.conf" <<END
-start		10.0.10.10
-end		10.0.10.200
-interface	wlan0
-remaining	yes
-opt	dns	8.8.8.8 8.8.4.4 # Google Public DNS servers
-option	subnet	255.255.255.0
-opt	router	10.0.10.1
-option	domain	local
-option	lease	864000
-END
-
     # configure ip forwading/masquerade from wlan clients to the upstream eth0
     # network, so the vspi serves as a wireless router, i.e. clients can
     # connect to the outside internet as well as the vspi pages.
@@ -387,20 +375,43 @@ END
     echo "# allow vspi to act as a router" >> /etc/sysctl.conf
     echo "net.ipv4.ip_forward=1"           >> /etc/sysctl.conf
 
+    # setup dnsmasq as both the DHCP server for wlan0 as well as the DNS
+    # server. Client computers who get dns servers through DHCP will set their
+    # DNS server to 10.0.10.1, allowing dnsmasq to resolve our custom *.vspi
+    # domain for them.
+    #
+    # Note: if the client computer has their DNS set up manually, e.g. to
+    # google's DNS, then *.vspi domains won't work. This can be fixed by
+    # allowing DHCP to set them (sometimes called "use automatic DNS servers"
+    # in network options), or manually setting the DNS server to 10.0.10.1.
     sudo rm /etc/dnsmasq.conf
     cat > "/etc/dnsmasq.conf" <<END
+
 interface=wlan0
+
 dhcp-range=10.0.10.10,10.0.10.200,12h
+
+# resolve names in /etc/hosts under the "vspi" domain
+domain=vspi
+
+# expand unqualified domains to it.vspi, e.g.
+# typing 'vspi' into a webbrowser will resolve to
+# the same ip as typing in 'vspi.vspi'
+expand-hosts
 END
 
-  sudo rm /etc/default/udhcpd
-  echo -e "DHCPD_OPTS='-S'" > /etc/default/udhcpd
-  sudo update-rc.d udhcpd enable
+  # run dnsmasq on startup
+  sudo update-rc.d dnsmasq enable
+
   echo -e "DAEMON_CONF='/etc/hostapd/hostapd.conf'" >> /etc/default/hostapd
   sudo update-rc.d hostapd enable
 
 echo -e "vspi" > /etc/hostname
-echo -e "127.0.0.1    vspi" > /etc/hosts
+
+# resolve vspi as the wlan0 router. Note that dnsmasq also reads /etc/hosts so
+# this line will allow "vspi" from a client to resolve to the vspi machine.
+echo -e "10.0.10.1    vspi" > /etc/hosts
+
 sudo /etc/init.d/hostname.sh
 
 }
