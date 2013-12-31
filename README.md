@@ -5,12 +5,12 @@ VSPi is an education server targeting developing countries. The hardware is base
 No matter your level of experience, your contributions to the project are welcome. The steps for installing the VSPi code are listed below, give it a try and let us know what you think.
 
 ## Hardware Configuration ##
+
 * Raspberry Pi - Model B (512 MB / Revision 2)
 * Edimax 150 Mbps Wireless 11n Nano Size USB Adapter
 * Transcend 32 GB Flash Memory Card
 * Raspberry Pi Case
 * Micro USB power plug
-
 
 ## Installing `vspi` ##
 
@@ -26,15 +26,19 @@ Run this command to install and configure VS-Pi:
 
 The setup script will now run and might take over 10 minutes depending on your connection. The script sets up and configures:
 
-* PHP
-* MySQL
-* nginx
-* Redis
-* WordPress
-* Various network utilities to make VSPi a wifi hotspot
+* **WordPress**: website content platform.
+* **nginx**: webserver for wordpress.
+* **PHP/MySQL**: backend for wordpress.
+* **Redis**: page cache for wordpress to reduce page loading times.
+* **hostapd**: wireless access point daemon to make the vspi act as a wireless hotspot.
+* **iptables**: forwards requests to the outside internet from wireless clients
+  to the raspberry pi's ethernet port, i.e. makes the vspi act as a wireless router.
+* **dnsmasq**: DNS/DHCP server to allow wireless clients to lease IP addresses and
+  resolve internal pages under the `*.vspi` domain.
 
-After the script finishes, your Pi will reboot. Once it's booted back up, you can join the wireless network it creates called "VS-Pi Connect" then navigate to http://vspi.local.
+After the script finishes, your Pi will reboot. Once it's booted back up, you can join the wireless network "VS-Pi Connect" and navigate to http://vspi . You should see the wordpress-based homepage.
 
+If your Raspberry Pi is connected to the internet through its ethernet port, you should also be able to browse to the outside internet while connected to "VS-Pi Connect".
 
 ### WordPress ###
 
