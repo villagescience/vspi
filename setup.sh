@@ -240,7 +240,7 @@ function install_wordpress {
     sudo git clone https://github.com/villagescience/wordpress.git /var/www/$1
     sudo chown root:root -R "/var/www/$1"
     sudo chmod 777 -R "/var/www/$1/wp-content"
-    sudo chmod 666 "/var/www/$1/.htaccess"
+    # sudo chmod 666 "/var/www/$1/.htaccess"
     sudo chmod 666 "/var/www/$1/wp-config.php"
 
     # Setting up the MySQL database
