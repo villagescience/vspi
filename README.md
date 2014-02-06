@@ -1,6 +1,6 @@
 ## About VSPi ##
 
-VSPi is an education server targeting developing countries. The hardware is based on Raspberry Pi computers because they are inexpensive and efficient. The server software runs on nginx and runs WordPress because there is an large community of developer suuport. [Read more about VSPi on the Village Science site.](http://villagescience.org/vs-pi/) 
+VSPi is an education server targeting developing countries. The hardware is based on Raspberry Pi computers because they are inexpensive and efficient. The server software runs on nginx and runs WordPress because there is an large community of developer support. [Read more about VSPi on the Village Science site.](http://villagescience.org/vs-pi/) 
 
 No matter your level of experience, your contributions to the project are welcome. The steps for installing the VSPi code are listed below, give it a try and let us know what you think.
 
