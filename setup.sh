@@ -231,7 +231,9 @@ function install_redis {
 }
 
 function install_fonts {
-    sudo apt-get -qq -y install fonts-lao
+	sudo apt-get -qq -y install fonts-khmeros
+	sudo apt-get -qq -y install fonts-lao
+	sudo apt-get -qq -y install fonts-tlwg-garuda
 }
 
 function install_wordpress {
