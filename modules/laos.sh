@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo "Example of using the vspi module laos tool"
+sudo cp /usr/share/zoneinfo/Asia/Vientiane /etc/localtime
+echo "Timezone changed to Indochina Time (ICT)"
