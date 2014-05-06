@@ -1,5 +1,16 @@
 #!/bin/bash
 
+#logging method from: http://stackoverflow.com/questions/3173131/redirect-copy-of-stdout-to-log-file-from-within-bash-script-itself
+
+#truncate logfile
+>logfile.txt
+
+#redirect stdout into a named pipe running "tee"
+exec > >(tee logfile.txt)
+
+#redirect stderr as well
+exec 2>&1
+
 ########################################################################
 ##
 ##   VS-Pi Install Script
@@ -304,6 +315,7 @@ server {
 }
 END
     invoke-rc.d nginx reload
+    print_info "Issuing curl command"
     curl -d "weblog_title=VSPi&user_name=admin&admin_password=raspberry&admin_password2=raspberry&admin_email=vspi@villagescience.org" http://127.0.0.1/wp-admin/install.php?step=2 >/dev/null 2>&1
 }
 
